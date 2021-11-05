@@ -1,7 +1,26 @@
-Assignment no. 1 for  the Research Track 1 course
+Pyhton Robotics Simulator
 ================================
-
+_Assignment no. 1 for  the Research Track 1 course_
+----------------------
+Professor [Carmine Recchiuto](https://github.com/CarmineD8)
+----------------------
 This is a simple, portable robot simulator developed by [Student Robotics](https://studentrobotics.org).
+
+The aim of this project is to make a holonomic robot move counterclockwise in an arena composed of golden boxes and silver tokens: the robot must avoid hitting the walls, made up of golden boxes, and it must recognize, approach, grab and release behind itself the silver tokens around the arena, one by one.
+The following figures show the objects cited above:
+
+Holonomic robot: 
+
+![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/robot.png)
+
+Golden box:
+
+![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token.png)
+
+Silver box:
+
+![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token_silver.png)
+
 
 Installing and running
 ----------------------
