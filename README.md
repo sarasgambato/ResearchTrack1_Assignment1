@@ -1,23 +1,27 @@
-Pyhton Robotics Simulator
-================================
-_Assignment no. 1 for  the Research Track 1 course_
-----------------------
-Professor [Carmine Recchiuto](https://github.com/CarmineD8)
+# Pyhton Robotics Simulator
+
+## _Assignment no. 1 for  the Research Track 1 course_
+
+### Professor [Carmine Recchiuto](https://github.com/CarmineD8)
 ----------------------
 This is a simple, portable robot simulator developed by [Student Robotics](https://studentrobotics.org).
 
-The aim of this project is to make a holonomic robot move counterclockwise in an arena composed of golden boxes and silver tokens: the robot must avoid hitting the walls, made up of golden boxes, and it must recognize, approach, grab and release behind itself the silver tokens around the arena, one by one.
-The following figures show the objects cited above:
+The aim of this project is to make a holonomic robot move around an arena following these rules:
+- the robot has to move counter-clockwise;
+- the robot must avoid the walls of the arena, made up of golden boxes;
+- the robot must approach, grab and release behind itself the silver tokens displaced around the arena.
 
-Holonomic robot: 
+The following figures show the objects descripted above:
+
+Holonomic robot 
 
 ![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/robot.png)
 
-Golden box:
+Golden box
 
 ![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token.png)
 
-Silver box:
+Silver box
 
 ![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token_silver.png)
 
@@ -34,6 +38,8 @@ Robot API
 
 The API for controlling a simulated robot is designed to be as similar as possible to the [SR API][sr-api].
 
+## Features
+
 ### Motors ###
 
 The simulated robot has two motors configured for skid steering, connected to a two-output [Motor Board](https://studentrobotics.org/docs/kit/motor_board). The left motor is connected to output `0` and the right motor to output `1`.
@@ -44,6 +50,12 @@ The Motor Board API is identical to [that of the SR API](https://studentrobotics
 R.motors[0].m0.power = 25
 R.motors[0].m1.power = -25
 ```
+The robot moves thanks to the following implemented functions:
+* `drive(speed, time)`: this function sets the linear velocity of the robot.
+   * Arguments: `speed` sets the velocity of the motors, `time` tells the robot the amout of time it has to drive forward.
+   * Returns: the functions has no returns.
+* `turn(speed, time)`: this function sets the angular velocity of the robot.
+   * Arguments: `speed` sets the velocity of the motors, `time` tells the robot the amout of time it has to turn.
 
 ### The Grabber ###
 
@@ -58,6 +70,9 @@ The `R.grab` function returns `True` if a token was successfully picked up, or `
 To drop the token, call the `R.release` method.
 
 Cable-tie flails are not implemented.
+
+Moreover, the `R.grab` method has been used in the function implemented to actually grab the silver token in front of us via the function `grab_silver_token()` described in the following code:
+
 
 ### Vision ###
 
