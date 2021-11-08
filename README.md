@@ -1,4 +1,4 @@
-# Pyhton Robotics Simulator
+# Python Robotics Simulator
 
 ## _Assignment no. 1 for  the Research Track 1 course_
 
@@ -26,15 +26,18 @@ Silver token
 ![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token_silver.png)
 
 
-Installing and running
-----------------------
+## Installing and running
 
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
 Once the dependencies are installed, simply run the `test.py` script to test out the simulator.
 
-Robot API
----------
+To run one (ore more) scripts in the simulator, use `run.py`, passing it the files name as shown in the following code line:
+```sh
+$ python run.py assignment.py
+```
+
+## Robot API
 
 The API for controlling a simulated robot is designed to be as similar as possible to the [SR API][sr-api].
 
@@ -149,15 +152,15 @@ for m in markers:
 The `Marker` object and the `R.see()` method have been used by many functions in the simulator:
 * `find_golden_token()`: this functions has been implemented to find the golden tokens in front of the robot at a maximum distance of 0.8 and in a cone of 90° (45° on the left and 45° on the right). The goal of this function is to communicate to the main function that the robot is about to hit a wall if it does not turn away.
    * Arguments: this function has no arguments.
-   * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest golden token. If no golden token is detected in the vicinity of the robot, the function returns -1 and -1.
+   * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest golden token. If no golden token is detected in the vicinity of the robot, the function returns `-1` and `-1`.
 
 * `find_silver_token()`: this functions has been implemented to find the silver tokens in front of the robot at a maximum distance of 2 and in a cone of 90 degrees (45 degrees on the left and 45 degrees on the right). The goal of this function is to communicate to the main function that a silver token has been found and that the routine to grab it can start.
    * Arguments: this function has no arguments.
-   * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest silver token. If no silver token is detected in the vicinity of the robot, or if the robot could hit a golden token while trying to approach the detected silver token, the function returns -1 and -1.
+   * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest silver token. If no silver token is detected in the vicinity of the robot, or if the robot could hit a golden token while trying to approach the detected silver token, the function returns `-1` and `-1`.
 
 * `check_distance()`: this function has been implemented to check if the closest golden token to the robot is on the left or on the right in a cone of 30°, from -100° to -70° for the left side and from 70° to 100° for the right side. The goal of this function is to make the robot turn left or right based on the return of the function.
    * Arguments: this function has no arguments.
-   * Returns: the function returns 1 if the closest golden token is on the right; in this case the robot will turn left. The function return -1 if the closest golden token is on the left; in this case the robot will turn right.
+   * Returns: the function returns `1` if the closest golden token is on the right; in this case the robot will turn left. The function return `-1` if the closest golden token is on the left; in this case the robot will turn right.
 
 * `golden_between()`: this function has been implemented to check whether there are golden tokens between the robot and the silver token that has been detected in the function `find_silver_token(dist, rot_y)`.
    * Arguments: this function takes as inputs `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the detected silver token.
