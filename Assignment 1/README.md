@@ -63,6 +63,7 @@ The robot moves thanks to the following implemented functions:
    * Returns: the functions has no returns.
 * `turn(speed, time)`: this function sets the angular velocity of the robot.
    * Arguments: `speed` sets the velocity of the motors, `time` tells the robot the amout of time it has to turn.
+   * Returns: the function has no returns.
 
 ### The Grabber ###
 
