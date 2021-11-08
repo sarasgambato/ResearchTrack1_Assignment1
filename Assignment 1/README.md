@@ -15,15 +15,19 @@ The following figures show the objects descripted above:
 
 Holonomic robot 
 
-![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/robot.png)
+![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/robot.png)
 
 Golden token
 
-![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token.png)
+![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/token.png)
 
 Silver token
 
-![alt text](https://github.com/CarmineD8/python_simulator/blob/assignment/robot-sim/sr/token_silver.png)
+![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/token_silver.png)
+
+Arena
+
+![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/arena.jpeg)
 
 
 ## Installing and running
