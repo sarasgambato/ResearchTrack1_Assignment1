@@ -8,7 +8,7 @@ This is a simple, portable robot simulator developed by [Student Robotics](https
 
 The aim of this project is to make a holonomic robot move around an arena following these rules:
 - the robot has to move counter-clockwise;
-- the robot must avoid the walls of the arena, made up of golden boxes;
+- the robot must avoid the walls of the arena, made up of golden tokens;
 - the robot must approach, grab and release behind itself the silver tokens displaced around the arena.
 
 The following figures show the objects descripted above:
@@ -81,12 +81,12 @@ Cable-tie flails are not implemented.
 
 #### Functions that use these methods ####
 
-* `grab_silver_token()`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
+* `grab_silver_token(dist, rot_y)`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
 
    * Arguments: `dist` and `rot_y`, which are respectively the distance of the robot from the silver token and the angle between the two.
    * Returns: the function has no returns.
 
-The function states that if the robot is near the silver token, so if `dist < 2`, it approaches the token based on `rot_y`: if the robot is well aligned with the token, it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
+The function states that if the robot is near the silver token, so if `dist < 2`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orrientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
 Code implementation:
 ```python
 if dist < 2:
@@ -101,7 +101,7 @@ if dist < 2:
             print("Right a bit...")
             turn(+1, 0.5)
 ```
-Once the robot is right in front of the token, so once `dist < d_th` (where `d_th` is the distance threshold), the routine states that the robot grabs it and checks the distance from the closest golden token on the left and on the right of itslef via the function `check_distance()`, descripted in the next section. This last control was implemented so that when the robot turns to release the token behind itslef, it does not collide with the walls because it will turn in the direction where there is more space.
+Once the robot is right in front of the token, so once `dist < d_th` (where `d_th` is the distance threshold, which is set at 0.4), the routine states that the robot grabs it and checks the distance from the closest golden token on the left and on the right of itslef via the function `check_distance()`, descripted in the [next section](#vision). This last control was implemented so that when the robot turns to release the token behind itslef, it does not collide with the walls because it will turn in the direction where there is more space.
 Code implementation:
 ```python
 if dist < d_th:
@@ -153,6 +153,8 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
+One thing that must be taken into note is that the robot has sensors all around itself, so it can detect tokens in a cone of 360° (from 0° to -180° degrees on the left and from 0° to 180° on the right), so a control on the angle between the robot and the tokens must be implemented when looking for golden/silver tokens.
+
 #### Functions that use the `Marker` object and `R.see()` method ####
 The `Marker` object and the `R.see()` method have been used by many functions in the simulator:
 * `find_golden_token()`: this functions has been implemented to find the golden tokens in front of the robot at a maximum distance of 0.8 and in a cone of 90° (45° on the left and 45° on the right). The goal of this function is to communicate to the main function that the robot is about to hit a wall if it does not turn away.
@@ -185,5 +187,14 @@ def find_silver_token():
     else:
     	return dist, rot_y
 ```
+## Main function ##
+The following flowchart shows the algorithm followed by the robot to look for silver tokens.
+
+![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/flowchart.drawio.png)
+
+As we can see, the robot keeps driving around the arena looking for silver tokens thanks to the `while(1)` loop. Then a series of `if` statements follow in this order:
+1) is a golden token detected? If yes, turn left or right untill the robot cannot detect golden tokens anymore; if not, go to the next `if` statement.
+2) is a silver token detected? If not, drive forward and keep looking for it; if yes, go to the next `if` statement.
+3) if a silver token is detected, inside the `find_silver_token()` function there is another control on the golden tokens via the function `golden_between(dist, rot_y)`, with which we check if the detected silver token can be reached safely without hitting the walls: if not, the robot keeps driving; if yes, the robot executes the grab routine, which is descripted in the section [The Grabber]()#the-grabber, relatively to the function `grab_silver_token(dist, rot_y)`.
 
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
