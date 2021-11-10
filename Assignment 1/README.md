@@ -197,6 +197,10 @@ As we can see, the robot keeps driving around the arena looking for silver token
 1) Is a golden token detected? If yes, check if the closest wall is on the left or on the right of the robot and turn until the robot cannot detect golden tokens anymore; if not, go to the next `if` statement.
 2) Is a silver token detected? If not, drive forward and keep looking for it; if yes, execute the grab routine descripted in the section relative to [The Grabber](#the-grabber).
 
+The following sped-up video shows the robot doing a complete lap around the arena, in which we can specifically see how the grab routine works.
+
+https://user-images.githubusercontent.com/62473854/141160504-9cbcb07e-ba59-4267-ba0c-6cabde620f5d.mp4
+
 ## Conclusions ##
 ### My difficulties ###
 Then main difficulties I encountered were:
@@ -206,7 +210,7 @@ Then main difficulties I encountered were:
 Also, I've worked very little with GitHub in the previous years, so doing this assignment helped increasing my dexterity with this platform, which is very essential for an engineer.
 
 ### Possible improvements ###
-Given that the threshold to look for silver tokens is pretty low (set at 1.5), a possible improvement could be adding a control in the function `grab_silver_token()`, instead of controlling the golden tokens between the robot and the silver token inside the function `find_silver_token()`, so that when the robot finds a silver token, it approaches the token while countinuously checking the distance from the wall. I personally tried implementing this using the function `check_distance()` inside the grab routine: it worked for about three loops around the arena, then a golden token was hit, so the algorithm should have been upgraded and the bugs fixed. I chose, instead, to keep the function `golden_obstacle()` because the robot did not hit once the walls in ten loops around the arena (then I stopped the execution of the program via keyboard interrupt, as I was pretty sure that what I chose to do was correct), so the rules of the assignment were respected.
+Given that the threshold to look for silver tokens is pretty low (set at 1.5), a possible improvement could be adding a control in the function `grab_silver_token()`, instead of controlling the golden tokens between the robot and the silver token inside the function `find_silver_token()`, so that when the robot finds a silver token, it approaches the token while countinuously checking the distance from the wall. I personally tried implementing this using the function `check_distance()` inside the grab routine: it worked for about three laps around the arena, then a golden token was hit, so the algorithm should have been upgraded and the bugs fixed. I chose, instead, to keep the function `golden_obstacle()` because the robot did not hit once the walls in ten laps around the arena (then I stopped the execution of the program via keyboard interrupt, as I was pretty sure that what I chose to do was correct), so the rules of the assignment were respected.
 
 Also, my implementation of the assignment is fairly simple: for example, the turns to not hit the walls are as easy as they could be implemented, so another possible improvement could be making the robot turn more swiftly.
 
