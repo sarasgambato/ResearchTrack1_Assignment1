@@ -38,7 +38,7 @@ Once the dependencies are installed, simply run the `test.py` script to test out
 
 To run one (ore more) scripts in the simulator, use `run.py`, passing it the files name as shown in the following code line:
 ```sh
-$ python run.py assignment.py
+$ python2 run.py assignment.py
 ```
 
 ## Robot API
@@ -60,12 +60,12 @@ R.motors[0].m1.power = -25
 The robot moves thanks to the following implemented functions:
 * `drive(speed, time)`: this function sets the linear velocity of the robot.
    * Arguments: `speed` sets the velocity of the motors, `time` tells the robot the amout of time it has to drive forward.
-   * Returns: the functions has no returns.
+   * Returns: this function has no returns.
 * `turn(speed, time)`: this function sets the angular velocity of the robot.
    * Arguments: `speed` sets the velocity of the motors, `time` tells the robot the amout of time it has to turn.
-   * Returns: the function has no returns.
+   * Returns: this function has no returns.
 
-### The Grabber ###
+### <a id="the-grabber"></a> The Grabber ###
 
 The robot is equipped with a grabber, capable of picking up a token which is in front of the robot and within 0.4 metres of the robot's centre. To pick up a token, call the `R.grab` method:
 
@@ -84,7 +84,7 @@ Cable-tie flails are not implemented.
 * `grab_silver_token(dist, rot_y)`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
 
    * Arguments: `dist` and `rot_y`, which are respectively the distance of the robot from the silver token and the angle between the two.
-   * Returns: the function has no returns.
+   * Returns: this function has no returns.
 
 The function states that if the robot is near the silver token, so if `dist < 2`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orrientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
 Code implementation:
@@ -122,7 +122,7 @@ if dist < d_th:
         return
 ```
 
-### Vision ###
+### <a id="vision"></a> Vision ###
 
 To help the robot find tokens and navigate, each token has markers stuck to it, as does each wall. The `R.see` method returns a list of all the markers the robot can see, as `Marker` objects. The robot can only see markers which it is facing towards.
 
@@ -153,7 +153,7 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
-One thing that must be taken into note is that the robot has sensors all around itself, so it can detect tokens in a cone of 360° (from 0° to -180° degrees on the left and from 0° to 180° on the right), so a control on the angle between the robot and the tokens must be implemented when looking for golden/silver tokens.
+One thing that must be taken into note is that the robot has sensors all around itself, so it can detect tokens in a cone of 360° (from -180° to 0° on the left and from 0° to 180° on the right), so a control on the angle between the robot and the tokens must be implemented when looking for golden/silver tokens.
 
 #### Functions that use the `Marker` object and `R.see()` method ####
 The `Marker` object and the `R.see()` method have been used by many functions in the simulator:
@@ -165,7 +165,7 @@ The `Marker` object and the `R.see()` method have been used by many functions in
    * Arguments: this function has no arguments.
    * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest silver token. If no silver token is detected in the vicinity of the robot, or if the robot could hit a golden token while trying to approach the detected silver token, the function returns `-1` and `-1`.
 
-* `check_distance()`: this function has been implemented to check if the closest golden token to the robot is on the left or on the right in a cone of 30°, from -100° to -70° for the left side and from 70° to 100° for the right side. The goal of this function is to make the robot turn left or right based on the return of the function.
+* `check_distance()`: this function has been implemented to check if the closest golden token to the robot is on the left or on the right in a cone of 30°, from -105° to -75° for the left side and from 75° to 105° for the right side. The goal of this function is to make the robot turn left or right based on the return of the function.
    * Arguments: this function has no arguments.
    * Returns: the function returns `1` if the closest golden token is on the right; in this case the robot will turn left. The function return `-1` if the closest golden token is on the left; in this case the robot will turn right.
 
@@ -195,6 +195,6 @@ The following flowchart shows the algorithm followed by the robot to look for si
 As we can see, the robot keeps driving around the arena looking for silver tokens thanks to the `while(1)` loop. Then a series of `if` statements follow in this order:
 1) is a golden token detected? If yes, turn left or right untill the robot cannot detect golden tokens anymore; if not, go to the next `if` statement.
 2) is a silver token detected? If not, drive forward and keep looking for it; if yes, go to the next `if` statement.
-3) if a silver token is detected, inside the `find_silver_token()` function there is another control on the golden tokens via the function `golden_between(dist, rot_y)`, with which we check if the detected silver token can be reached safely without hitting the walls: if not, the robot keeps driving; if yes, the robot executes the grab routine, which is descripted in the section [The Grabber]()#the-grabber, relatively to the function `grab_silver_token(dist, rot_y)`.
+3) if a silver token is detected, inside the `find_silver_token()` function there is another control on the golden tokens via the function `golden_between(dist, rot_y)`, with which we check if the detected silver token can be reached safely without hitting the walls: if not, the robot keeps driving; if yes, the robot executes the grab routine, which is descripted in the section [The Grabber](#the-grabber), relatively to the function `grab_silver_token(dist, rot_y)`.
 
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
