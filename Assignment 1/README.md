@@ -81,15 +81,16 @@ Cable-tie flails are not implemented.
 
 #### Functions that use these methods ####
 
-* `grab_silver_token(dist, rot_y)`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
+* `grab_silver_token()`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
 
-   * Arguments: `dist` and `rot_y`, which are respectively the distance of the robot from the silver token and the angle between the two.
+   * Arguments: this function has no argments.
    * Returns: this function has no returns.
 
-The function states that if the robot is near the silver token, so if `dist < 2`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orrientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
+The routine to approach, grab and release the token takes place inside a `while(True)` loop.
+The function states that if the robot is near the silver token, so if `dist < 1.5`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orrientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
 Code implementation:
 ```python
-if dist < 2:
+if dist < 1.5:
         print("I'm near the token")
         if -a_th<= rot_y <= a_th: 
             print("Ah, here we are!")
@@ -161,7 +162,7 @@ The `Marker` object and the `R.see()` method have been used by many functions in
    * Arguments: this function has no arguments.
    * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest golden token. If no golden token is detected in the vicinity of the robot, the function returns `-1` and `-1`.
 
-* `find_silver_token()`: this functions has been implemented to find the silver tokens in front of the robot at a maximum distance of 2 and in a cone of 90 degrees (45 degrees on the left and 45 degrees on the right). The goal of this function is to communicate to the main function that a silver token has been found and that the routine to grab it can start.
+* `find_silver_token()`: this functions has been implemented to find the silver tokens in front of the robot at a maximum distance of 1.5 and in a cone of 90 degrees (45 degrees on the left and 45 degrees on the right). The goal of this function is to communicate to the main function that a silver token has been found and that the routine to grab it can start.
    * Arguments: this function has no arguments.
    * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest silver token. If no silver token is detected in the vicinity of the robot, or if the robot could hit a golden token while trying to approach the detected silver token, the function returns `-1` and `-1`.
 
@@ -176,13 +177,13 @@ The `Marker` object and the `R.see()` method have been used by many functions in
 The following code shows the implementation of the function `find_silver_token()` as an example:
 ```python
 def find_silver_token():
-    dist = 2
+    dist = 1.5
     for token in R.see():
         if token.dist < dist and token.info.marker_type == MARKER_TOKEN_SILVER and -45 < token.rot_y < 45:
             if golden_between(token.dist, token.rot_y) == False:	
             	dist = token.dist
             	rot_y = token.rot_y
-    if dist == 2:
+    if dist == 1.5:
  	return -1, -1
     else:
     	return dist, rot_y
@@ -193,8 +194,19 @@ The following flowchart shows the algorithm followed by the robot to look for si
 ![alt text](https://github.com/sarasgambato/Research_Track_1/blob/main/Assignment%201/images/flowchart.drawio.png)
 
 As we can see, the robot keeps driving around the arena looking for silver tokens thanks to the `while(1)` loop. Then a series of `if` statements follow in this order:
-1) is a golden token detected? If yes, turn left or right untill the robot cannot detect golden tokens anymore; if not, go to the next `if` statement.
-2) is a silver token detected? If not, drive forward and keep looking for it; if yes, go to the next `if` statement.
-3) if a silver token is detected, inside the `find_silver_token()` function there is another control on the golden tokens via the function `golden_between(dist, rot_y)`, with which we check if the detected silver token can be reached safely without hitting the walls: if not, the robot keeps driving; if yes, the robot executes the grab routine, which is descripted in the section [The Grabber](#the-grabber), relatively to the function `grab_silver_token(dist, rot_y)`.
+1) Is a golden token detected? If yes, turn left or right untill the robot cannot detect golden tokens anymore; if not, go to the next `if` statement.
+2) Is a silver token detected? If not, drive forward and keep looking for it; if yes, go to the next `if` statement.
+3) If a silver token is detected, inside the `find_silver_token()` function there is another control on the golden tokens via the function `golden_between(dist, rot_y)`, with which we check if the detected silver token can be reached safely without hitting the walls: if not, the robot keeps driving; if yes, the robot executes the grab routine, which is descripted in the section [The Grabber](#the-grabber), relatively to the function `grab_silver_token(dist, rot_y)`.
+
+## Conlusions ##
+### My difficulties ###
+Then main difficulties I encountered were:
+* making the robot turn in a proper way when being too close to a wall;
+* avoiding considering the silver tokens which would make the robot collide with the wall while trying to grab them.
+The first problem was solved by creating a loop in the main function which states that the robot must turn until it does not detect golden token anymore.
+The second problem was solved by setting the threshold to look for silver tokens at 1.5 and by creating the function `gold_between()`, descripted above.
+
+### Possible improvements ###
+Given that the threshold to look for silver tokens is pretty low, 
 
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
