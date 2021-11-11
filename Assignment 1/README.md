@@ -205,7 +205,7 @@ https://user-images.githubusercontent.com/62473854/141160504-9cbcb07e-ba59-4267-
 ### My difficulties ###
 Then main difficulties I encountered were:
 * Making the robot turn in a proper way when being too close to a wall; this problem was solved by creating a loop in the main function which states that the robot must turn until it does not detect golden tokens anymore.
-* Avoiding considering the silver tokens which would make the robot collide with the wall while trying to grab them; this problem was solved by setting the threshold to look for silver tokens at 1.5 and by creating the function `golden_obstacle()`, descripted [above](#vision).
+* Avoiding considering the silver tokens which would make the robot collide with the wall while trying to grab them; this problem was solved by setting the threshold to look for silver tokens at 1.5 and by creating the function `golden_obstacle(dist, rot_y)`, descripted [above](#vision).
 
 Also, I've worked very little with GitHub in the previous years, so doing this assignment helped increasing my dexterity with this platform, which is very essential for an engineer.
 
