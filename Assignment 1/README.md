@@ -160,9 +160,9 @@ One thing that must be taken into note is that the robot has sensors all around 
 The `Marker` object and the `R.see()` method have been used by many functions in the simulator:
 * `find_golden_token()`: this functions has been implemented to find the golden tokens in front of the robot at a maximum distance of 0.8 and in a cone of 90° (45° on the left and 45° on the right). The goal of this function is to communicate to the main function that the robot is about to hit a wall if it does not turn away.
    * Arguments: this function has no arguments.
-   * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest golden token. If no golden token is detected in the vicinity of the robot, the function returns `-1` and `-1`.
+   * Returns: the function returns `True` if a golden token is detected, otherwise it returns `False`.
 
-* `find_silver_token()`: this functions has been implemented to find the silver tokens in front of the robot at a maximum distance of 1.5 and in a cone of 90 degrees (45 degrees on the left and 45 degrees on the right). The goal of this function is to communicate to the main function that a silver token has been found and that the routine to grab it can start.
+* `find_silver_token()`: this functions has been implemented to find the silver tokens in front of the robot at a maximum distance of 1.5 and in a cone of 90 degrees (45° on the left and 45° on the right). The goal of this function is to communicate to the main function that a silver token has been found and that the routine to grab it can start.
    * Arguments: this function has no arguments.
    * Returns: the function returns `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the closest silver token. If no silver token is detected in the vicinity of the robot, or if the robot could hit a golden token while trying to approach the detected silver token (checked via the function `golden_obstacle()`), the function returns `-1` and `-1`.
 
@@ -204,7 +204,7 @@ https://user-images.githubusercontent.com/62473854/141160504-9cbcb07e-ba59-4267-
 ## Conclusions ##
 ### My difficulties ###
 Then main difficulties I encountered were:
-* Making the robot turn in a proper way when being too close to a wall; this problem was solved by creating a loop in the main function which states that the robot must turn until it does not detect golden token anymore.
+* Making the robot turn in a proper way when being too close to a wall; this problem was solved by creating a loop in the main function which states that the robot must turn until it does not detect golden tokens anymore.
 * Avoiding considering the silver tokens which would make the robot collide with the wall while trying to grab them; this problem was solved by setting the threshold to look for silver tokens at 1.5 and by creating the function `golden_obstacle()`, descripted [above](#vision).
 
 Also, I've worked very little with GitHub in the previous years, so doing this assignment helped increasing my dexterity with this platform, which is very essential for an engineer.
