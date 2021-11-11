@@ -94,7 +94,7 @@ if dist < 1.5:
         print("I'm near the token")
         if -a_th<= rot_y <= a_th: 
             print("Ah, here we are!")
-            drive(30, 0.1)
+            drive(50, 0.1)
         elif rot_y < -a_th: 
             print("Left a bit...")
             turn(-1, 0.5)
@@ -154,7 +154,7 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
-One thing that must be taken into note is that the robot has sensors all around itself, so it can detect tokens in a cone of 360° (from -180° to 0° on the left and from 0° to 180° on the right), so a control on the angle between the robot and the tokens must be implemented when looking for golden/silver tokens.
+One thing that must be taken into note is that the robot has sensors all around itself, so it can detect tokens in a cone of 360° (from -180° to 0° on the left and from 0° to 180° on the right), with 0° being detected in front of the robot, so a control on the angle between the robot and the tokens must be implemented when looking for golden/silver tokens.
 
 #### Functions that use the `Marker` object and `R.see()` method ####
 The `Marker` object and the `R.see()` method have been used by many functions in the simulator:
@@ -210,7 +210,7 @@ Then main difficulties I encountered were:
 Also, I've worked very little with GitHub in the previous years, so doing this assignment helped increasing my dexterity with this platform, which is very essential for an engineer.
 
 ### Possible improvements ###
-Given that the threshold to look for silver tokens is pretty low (set at 1.5), a possible improvement could be adding a control in the function `grab_silver_token()`, instead of controlling the golden tokens between the robot and the silver token inside the function `find_silver_token()`, so that when the robot finds a silver token, it approaches the token while countinuously checking the distance from the wall. I personally tried implementing this using the function `check_distance()` inside the grab routine: it worked for about three laps around the arena, then a golden token was hit, so the algorithm should have been upgraded and the bugs fixed. I chose, instead, to keep the function `golden_obstacle()` because the robot did not hit once the walls in ten laps around the arena (then I stopped the execution of the program via keyboard interrupt, as I was pretty sure that what I chose to do was correct), so the rules of the assignment were respected.
+Given that the threshold to look for silver tokens is pretty low (set at 1.5), a possible improvement could be adding a control in the function `grab_silver_token()`, instead of controlling the golden tokens between the robot and the silver token inside the function `find_silver_token()`, so that when the robot finds a silver token, it approaches the token while countinuously checking the distance from the wall. I personally tried implementing this using the function `check_distance()` inside the grab routine: it worked for about three laps around the arena, then a golden token was hit, so the algorithm should have been upgraded and the bugs fixed. I chose, instead, to keep the function `golden_obstacle(dist, rot_y)` because the robot did not hit once the walls in ten laps around the arena (then I stopped the execution of the program via keyboard interrupt, as I was pretty sure that what I chose to do was correct), so the rules of the assignment were respected.
 
 Also, my implementation of the assignment is fairly simple: for example, the turns to not hit the walls are as easy as they could be implemented, so another possible improvement could be making the robot turn more swiftly.
 
