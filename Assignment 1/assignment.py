@@ -23,8 +23,6 @@ def drive(speed, seconds):
     Arguments:	
     	speed (int): the speed of the wheels
     	seconds (int): the time interval
-    	
-    This function has no returns
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = speed
@@ -41,8 +39,6 @@ def turn(speed, seconds):
     Arguments:	
     	speed (int): the speed of the wheels
     	seconds (int): the time interval
-    	
-    This function has no returns
     """
     R.motors[0].m0.power = speed
     R.motors[0].m1.power = -speed
@@ -56,8 +52,6 @@ def find_silver_token():
     """
     Function to find the silver closest token
     
-    This function has no arguments
- 
     Returns:
     	dist (float): distance of the closest silver token (-1 if no token is detected)
     	rot_y (float): angle between the robot and the token (-1 if no token is detected)
@@ -84,8 +78,6 @@ def find_golden_token():
     """
     Function to find the closest golden token in front of the robot
     
-    This function has no arguments
- 
     Returns:	
     	False: no golden token is detected in front of the robot
     	True: a golden token is detected in front of the robot
@@ -107,8 +99,6 @@ def find_golden_token():
 def check_distance():
     """
     Function to check whether the closest golden token is on the left or on the right of the robot
-    
-    This function has no arguments
     
     Returns:
     	1: the closest golden token is on the right
@@ -154,40 +144,34 @@ def golden_obstacle(dist, rot_y):
 def grab_silver_token():
     """
     Function to grab and release the closest silver token
-    
-    Arguments:
-        dist (float): distance of the closest silver token
-        rot_y (float): angle between the robot and the token
-    	
-    This function has no returns
     """
-    
     # loop created so the the main function does not exit from this function
     # until the detected silver token is not grabbed
     while True:
+    
         # the distance and the orientation are calculated at every cycle of the loop
         dist, rot_y = find_silver_token()
         
         # if the robot is close to the silver token, it grabs the token
         if dist < d_th:
             print("Found it!")
-            if R.grab(): 
-	        print("Gotcha")
-	        
-	        # the robot checks the distance from the closest golden token on the left and on the right
-	        # based on the distance, the robot turns left or right so that it does not hit the walls while turning
-	        if check_distance() == 1:
-	            turn(-20, 3)
-	            R.release()
-	            drive(-20, 1)
-	            turn(20, 3)
-	        else:
-	            turn(20, 3)
-	            R.release()
-	            drive(-20, 1)
-	            turn(-20, 3)
-	            print("Released the silver token, looking for a new one!")
-	        return
+            R.grab()
+            print("Gotcha")
+            
+            # the robot checks the distance from the closest golden token on the left and on the right
+            # based on the distance, the robot turns left or right so that it does not hit the walls while turning
+            if check_distance() == 1:
+	        turn(-20, 3)
+	        R.release()
+	        drive(-20, 1)
+	        turn(20, 3)   
+	    else:
+	        turn(20, 3)
+	        R.release()
+	        drive(-20, 1)
+	        turn(-20, 3)
+	    print("Released the silver token, looking for a new one!")
+	    return
 	    
         # if the robot is near the token, it moves according to the angle detected between it and the token
         elif dist < 1.5:
