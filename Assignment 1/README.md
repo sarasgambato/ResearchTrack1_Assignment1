@@ -83,11 +83,11 @@ Cable-tie flails are not implemented.
 
 * `grab_silver_token()`: function that uses the methods `R.grab` and `R.release` to implement the routine to approach, grab and release the silver token in front of us:
 
-   * Arguments: this function has no argments.
+   * Arguments: this function has no arguments.
    * Returns: this function has no returns.
 
 The routine to approach, grab and release the token takes place inside a `while(True)` loop.
-The function states that if the robot is near the silver token, so if `dist < 1.5`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orrientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
+The function states that if the robot is near the silver token, so if `dist < 1.5`, it approaches the token based on `rot_y`: if the robot is aligned with the token, so if `-a_th <= rot_y <= a_th` (where `a_th` is the orientation threshold, which is set at 2°) it  slowly goes toward it, otherwise the robot turns left or right to align with the token.
 Code implementation:
 ```python
 if dist < 1.5:
@@ -170,7 +170,7 @@ The `Marker` object and the `R.see()` method have been used by many functions in
    * Arguments: this function has no arguments.
    * Returns: the function returns `1` if the closest golden token is on the right; in this case the robot will turn left. The function return `-1` if the closest golden token is on the left; in this case the robot will turn right.
 
-* `golden_obstacle()`: this function has been implemented to check whether there are golden tokens between the robot and the silver token that has been detected in the function `find_silver_token(dist, rot_y)`.
+* `golden_obstacle(dist, rot_y)`: this function has been implemented to check whether there are golden tokens between the robot and the silver token that has been detected in the function `find_silver_token()`.
    * Arguments: this function takes as inputs `dist` and `rot_y`, which are respectively the distance and the angle between the robot and the detected silver token.
    * Returns: the function returns `True` if a golden token is between the silver token and the robot; in this case the calling function will discard the silver token that has been detected. The function returns `False` if the silver token is the closest one; in this case the calling function will save the distanca and the angle of the detected silver token from the robot.
 
