@@ -50,7 +50,7 @@ def turn(speed, seconds):
  
 def find_silver_token():
     """
-    Function to find the silver closest token
+    Function to find the closest silver token
     
     Returns:
     	dist (float): distance of the closest silver token (-1 if no token is detected)
